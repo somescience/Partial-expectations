@@ -1,0 +1,388 @@
+\documentclass[a4paper,12pt]{scrartcl}
+%\documentclass[a4paper,12pt]{article}
+
+% PACKAGES
+\usepackage[bookmarks,pagebackref]{hyperref}
+\usepackage{amsrefs}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{amsthm}
+\usepackage{eucal}
+\usepackage{bbm}
+\usepackage{chngcntr}
+\usepackage{apptools}
+\usepackage{mathtools}
+\usepackage{authblk}
+\usepackage[pdflatex]{crop}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{authblk}
+\usepackage{microtype}
+\usepackage{enumitem}
+\allowdisplaybreaks
+
+% PAGE SETTINGS
+\setkomafont{disposition}{\normalfont\bfseries}
+\setlength{\jot}{2ex}
+\linespread{1.2} 
+
+% CHANGE AUTHOR, TITLE, ETC HERE!
+\newcommand{\auth}[0]{{(A subset of) Tobias Fritz, Rostislav Matveev, Paolo Perrone and Jacobus W. Portegies}}
+\newcommand{\tit}[0]{{Partial Expectations}}
+\newcommand{\kw}[0]{{Ordered vector spaces, Convex Analysis, Probability, Banach spaces, Topological vector spaces, Monads, Higher Category Theory}}
+
+% PDF METADATA
+\hypersetup{
+pdfauthor={\auth},%
+pdftitle={\tit},%
+colorlinks, linktocpage=true, pdfstartpage=1, pdfstartview=FitV,%
+breaklinks=true, pdfpagemode=UseNone, pageanchor=true, pdfpagemode=UseOutlines,% 
+plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=1,%
+hypertexnames=true, pdfhighlight=/O,%
+urlcolor=black, linkcolor=black, citecolor=black, %}
+}
+\pdfinfo{%
+  /Title    (\tit)
+  /Author   (\auth)
+  /Creator  (\auth)
+  /Subject  (Functional Analysis)
+  /Keywords (\kw)
+}
+
+
+%% MATH %%
+
+\numberwithin{equation}{section}
+
+% ENVIRONMENTS
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[subsection]
+\AtAppendix{\counterwithin{thm}{section}}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{con}[thm]{Conjecture}
+\newtheorem{deph}[thm]{Definition}
+\newtheorem{prob}[thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{eg}[thm]{Example}
+\newtheorem*{note}{NOTE}
+
+
+% ALGEBRA
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Iso}{Iso}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\im}{im}
+%\DeclareMathOperator{\ker}{ker} %already there
+\DeclareMathOperator{\coim}{coim}
+\DeclareMathOperator{\cok}{cok}
+\DeclareMathOperator{\Aff}{\mathsf{Aff}} % affine functions
+
+% NUMBERS
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Npos}{\mathbb{N}_{>0}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Qpos}{\mathbb{Q}_{> 0}}
+\newcommand{\Qplus}{\mathbb{Q}_{\geq 0}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rplus}{\mathbb{R}_{\geq 0}}
+\newcommand{\Rpos}{\mathbb{R}_{>0}}
+
+% CATEGORY THEORY
+\newcommand{\cat}[1]{{\mathsf{#1}}} % font for categories
+\newcommand{\ar}[2][]{\arrow{#2}{#1}}
+\newcommand{\mono}[2][]{\arrow[hookrightarrow]{#2}{#1}} % in diagrams - use like \arrow
+\newcommand{\epi}[2][]{\arrow[twoheadrightarrow]{#2}{#1}} % in diagrams - use like \arrow
+\newcommand{\uni}[2][]{\arrow[dashrightarrow]{#2}{#1}} % in diagrams - use like \arrow
+\newcommand{\nat}[2][]{\arrow[Rightarrow]{#2}{#1}} % in diagrams - use like \arrow
+\newcommand{\idar}[2][]{\arrow[equal]{#2}{#1}} % in diagrams - use like \arrow
+\DeclareMathOperator{\1}{\mathbbm{1}}
+\DeclareMathOperator{\2}{\mathbbm{2}}
+\DeclareMathOperator*{\colim}{colim}
+\DeclareMathOperator{\from}{\leftarrow}
+\newcommand{\Lan}[2]{\mathrm{Lan}_{#2}(#1)} % Left Kan extension
+\newcommand{\id}{\mathrm{id}} % identity
+
+% Analysis
+\newcommand{\Lip}{\mathrm{Lip}}
+\newcommand{\lip}{\mathrm{lip}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\supp}{\mathrm{supp}}
+\newcommand{\diam}{\mathrm{diam}}
+\DeclareMathOperator{\D}{\partial}
+\DeclareMathOperator{\e}{\varepsilon}
+\newcommand{\Conv}{\mathsf{Conv}} % cone of convex continuous functions
+\newcommand{\PCM}{\mathsf{P}\E} % cone of partial expectations / centres of mass / whatever we call them
+
+% like nProb
+\DeclareMathOperator{\pro}{\nrightarrow}
+\DeclareMathOperator{\cfs}{\cat{FinSet}}
+\DeclareMathOperator{\cfsl}{\cfs/\cfs}
+\DeclareMathOperator{\Ind}{Ind}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\sto}{\rightsquigarrow}
+\newcommand{\stoch}[2][]{\arrow[rightsquigarrow]{#2}{#1}} % in diagrams - use like \arrow
+\DeclareMathOperator{\zu}{\geqslant}
+\DeclareMathOperator{\nzu}{\ngeqslant}
+\DeclareMathOperator{\uz}{\leqslant}
+\DeclareMathOperator{\nuz}{\nleqslant}
+
+% Draft packages
+\usepackage[draft]{showkeys}
+\usepackage{todonotes}
+
+% fix spacing issues with \left and \right
+\let\originalleft\left
+\let\originalright\right
+\renewcommand{\left}{\mathopen{}\mathclose\bgroup\originalleft}
+\renewcommand{\right}{\aftergroup\egroup\originalright}
+
+% enumerate stuff
+\renewcommand{\theenumi}{(\alph{enumi})}
+\renewcommand{\labelenumi}{\theenumi}
+
+
+
+% AUTHOR TITLE ETC - use variables defined above
+\title{\tit}
+\author{\auth\thanks{Correspondence: \href{mailto:fritz@mis.mpg.de}{fritz@mis.mpg.de}, \href{mailto:matveev@mis.mpg.de}{matveev@mis.mpg.de}, \href{mailto:perrone@mis.mpg.de}{perrone@mis.mpg.de}}}
+\affil{\small Max Planck Institute for Mathematics in the Sciences\\ Leipzig, Germany}
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\addcontentsline{toc}{section}{Abstract}
+This is abstract
+\end{abstract}
+
+%\newpage
+\tableofcontents
+
+
+\section{Introduction}
+
+What \emph{could} be in this document:
+
+\begin{itemize}
+\item Application to the asymptotic cone of convex bodies under Minkowski sum
+\item A lax coequalizer description of the partial expectation order
+\item relation to conditional expectations
+\item Law of large numbers in these terms (Actually this should probably go somewhere else, and the metric setting might be more suitable for that anyway)
+\end{itemize}
+
+Let $X$ be a compact Hausdorff space. Denote by $C(X)$ the Banach space of continuous functions $X\to\R$ equipped with the sup norm. Let $M(X)$ be the space of (signed) Radon measures on $X$. By the Riesz representation theorem, the integration map
+\[
+	M(X)\otimes C(X)\to\R,\qquad \mu\otimes f\mapsto \int_X f(x)\, d\mu(x)
+\]
+induces an isomorphism $M(X)\cong C(X)^*$. We consider $M(X)$ as a locally convex space via the resulting weak-$*$ topology. The dual norm that it also carries will not play any role for us. Denote also:
+\begin{itemize}
+ \item $M^+(X)$ the space of positive Radon measures on $X$;
+ \item $M_0(X)$ the space of (signed) Radon measures on $X$ of total mass $0$;
+ \item $PX := M_1^+(X)$ the space of Radon probability measures on $X$.
+\end{itemize}
+
+From the categorical point of view, the assignment $X\mapsto PX$ is part of a probability monad on the category $\cat{CHaus}$ of compact Hausdorff spaces and continuous maps, called the \emph{Radon monad}. Its unit and composition are given as usual respectively by delta distributions ($\delta:X\to PX$) and average distributions ($E:PPX\to PX$). As first proven in \cite{swirszcz}, the algebras of $P$ are exactly the compact convex subsets of locally convex spaces, with the structure map $e:PA\to A$ given by the center of mass.
+
+If $A$ is an affine space over some topological vector space $V$, we denote by $\Aff(A)$ the space of continuous affine functions $A\to\R$. We will use the same notation if $A$ is a convex subset.
+
+\section{Duality of convex functions and partial expectations}
+
+\begin{prop}
+ Consider a locally convex topological vector space $V$, and a compact convex subset $A\subseteq V$. Consider the quotient Banach space $\mathcal{F}(A):=C(A)/\Aff(A)$, with the quotient norm:
+ \begin{equation}
+  \|f\|_{\mathcal{F}(A)}:=\inf_{g\in\mathcal{A}(V)} \|f-g\|.
+ \end{equation}
+ Then $\mathcal{F}(A)^*$ is the subspace of $M(X)$ whose elements are measures
+ \begin{itemize}
+  \item of total mass $0$, i.e.~in $M_0(A)$, and
+  \item whose first moment is $0\in V$.
+ \end{itemize}
+\end{prop}
+
+\begin{proof}
+\ldots
+\end{proof}
+
+Let now $A$ be a $P$-algebra (i.e.~a compact convex subset of a locally convex space). Let $\D:M(PA)\to M(A)$ be given by:
+\begin{equation}
+ \mu \mapsto \D\mu := E\mu - e_*\mu .
+\end{equation}
+This map is the adjoint of
+\[
+	C(A) \to C(PA), \qquad f\mapsto \left(\mu \mapsto \right).
+\]
+We denote the image of the positive cone $\partial(M^+(PA))$ by $\PCM(A)$. It is a convex cone in $M(A)$. The fact that this cone is contained in the kernel of $e : M(A) \to A\otimes\R$ indicates that it is a cohomological object.
+
+\begin{lemma}
+$\PCM(A)$ is closed.
+\label{PCMclosed}
+\end{lemma}
+
+\begin{proof}
+$M^+(PA)$ has a compact convex base given by $PPA$.
+\end{proof}
+
+Let also $\operatorname{Conv}(A)$ be the space of convex and continuous real-valued functions on $A$, where $f\in C(A)$ is \emph{convex} if
+\[
+	f\left(\frac{x + y}{2}\right) \leq \frac{f(x) + f(y)}{2}	
+\]
+holds for all $x,y\in A$. (It follows by continuity that the analogous inequality with unequal weights is true as well.) Since $\operatorname{Conv}(A)$ is defined in terms of continuous linear inequalities, $\operatorname{Conv}(A)$ is a closed convex cone in $C(A)$.
+
+\begin{lemma}[Generalized Jensen's inequality]\label{jensen}
+ Let $f\in\operatorname{Conv}(A)$. Let $p\in PA$. Then
+ \begin{equation}\label{eqjensen}
+  f\left( \int_A a\, dp(a) \right) \le \int_A f(a) \, dp(a).
+ \end{equation}
+\end{lemma}
+
+\begin{proof}
+Every affine continuous function trivially satisfies this inequality. Moreover, by monotonicity of the integral, the class of functions satisfying the inequality is closed under suprema. Therefore, it is enough to show that every convex continuous function is a supremum of a suitable family of affine continuous functions.
+
+ Denote by $e(p)$ the expectation of $p$. The epigraph of $f$ is a closed convex set (closed by lower semicontinuity of $f$) in $A\oplus\R$. For every and $a\in A$ and $\e>0$, the point $(a,f(a) - \e)$ is not in the epigraph, and therefore by the Hahn-Banach separation theorem we can find an affine functional $k_{\e} : A \oplus\R \to \R$ such that $k_{\e}(a,f(a) - \e) \leq 0$ and such that for every $(x,\lambda)\in A\oplus\R$, if $f(x) \leq \lambda$, then
+\[
+	k_{\e}(x,\lambda) \geq 0.
+\]
+By rescaling (with a positive scalar), we can achieve that $k_{\e}$ is given in terms of components by $k_{\e}(x,\lambda) = \lambda - \ell_{\e}(x)$ for some continuous affine $\ell_{\e} : A\to\R$, which therefore satisfies $\ell_{\e}(x) \leq f(x)$ for all $x$ and $\ell_{\e}(a) > f(a) - \e$. Letting $a$ and $\e$ vary results in the desired description of $f$ as a supremum of affine continuous functions.
+\end{proof}
+
+
+
+\begin{cor}\label{converse}
+ Let $f$ be convex, and $\mu\in M^+(PA)$. Then
+ \begin{equation}
+  \int_A f\,d(\D\mu) \ge 0. 
+ \end{equation}
+\end{cor}
+
+\begin{proof}
+ By definition of $\D$, 
+ \begin{align*}
+   \int_A f \, d(\D\mu) &= \int_A f\, d(E\mu) - \int_A f\, d(e_*\mu) \\
+    &= \int_{PA} \left[ \int_A f(a) \, dp(a) - f\left( \int_A a\, dp(a) \right) \right] \, d\mu(p) .
+  \end{align*}
+\todo[inline]{Stretching the cohomological interpretation a bit further, this equation is analogous to Stokes' Theorem: the term in square brackets corresponds to $df$.}
+  By the generalized Jensen's inequality (Lemma \ref{jensen}), the quantity in the square brackets is non-negative, $\mu$ is in $M^+(PA)$, and so the whole expression is non-negative.
+\end{proof}
+
+
+And now the main result:
+
+\begin{thm}
+\label{main}
+ There is a duality of cones between $\PCM(A)\subseteq M(A)$ and $\Conv(A)\subseteq C(A)$. More precisely:
+ \begin{enumerate}
+  \item\label{a} $m\in M(A)$ is in $\PCM(A)$ if and only if:
+  \begin{equation}
+   \int f \, dm \ge 0 \quad \forall f\in\Conv(A) ;
+  \end{equation}
+\item\label{b} $f\in C(A)$ is in $\Conv(A)$ if and only if:
+  \begin{equation}
+   \int f \, dm \ge 0 \quad \forall m\in\PCM(A) .
+  \end{equation}
+ \end{enumerate}
+\end{thm}
+
+\begin{proof}
+Corollary \ref{converse} is the ``only if'' direction of both statements. The ``if'' part of~\ref{b} is by the definition of convexity, since every measure of the form
+\[
+	\frac{\delta_x + \delta_y}{2} + \delta_{\frac{x+y}{2}}
+\]
+is in $\PCM(A)$. Hence $\Conv(A)$ is the dual cone of $\PCM(A)$. Since a closed convex cone is its own double dual~\cite[Theorem~3.44]{conesduality}, the ``if'' part of~\ref{a} now follows from Lemma~\ref{PCMclosed}.
+\end{proof}
+
+
+
+\appendix
+
+\section{Old stuff (to be resurrected or deleted)}
+
+\begin{lemma}\label{dualcone}
+ Let $V,W$ be Banach spaces. Let $T:V\to W$ be a bounded, continuous linear map which is also an isomorphic embedding of topological vector spaces. 
+ Denote by $T^*$ its adjoint operator $W^*\to V^*$.
+ Let $K\subseteq W$ be a closed convex cone, let $K^*$ be its dual cone, and let $T^{-1}K$ be its preimage (or restriction to $V$, if we consider the latter as a subspace of $W$).
+ Then:
+ \begin{equation}\label{TKTK}
+  T^*(K^*) = \big( T^{-1}K \big)^*.
+ \end{equation}
+\end{lemma}
+
+A better version of this result is the following:
+
+\begin{lemma}
+let $V$ and $W$ be locally convex spaces. If $K\subseteq W$ is a closed convex cone and $T : V\to W$ is linear and continuous, then
+\[
+	\overline{T^*(K^*)} = T^{-1}(K)^*.
+\]
+\end{lemma}
+
+Here, the closure is with respect to the weak-$*$ topology (which is the canonical topology that the dual of a LCVS comes equipped with).
+
+\begin{proof}
+We have
+\[
+	T^*(K^*) = \{\: g(T-) \mid g\in W^*,\: g(K)\subseteq\R_+ \:\},
+\]
+and
+\[
+	T^{-1}(K)^* = \{\: f\in V^* \mid Tx\in K \:\Rightarrow\: f(x) \geq 0 \:\}.
+\]
+Then the first cone is trivially contained in the second. Now suppose that the closure of the first is strictly contained in the second, as witnessed by some $f\in T^{-1}(K)^*$ that cannot be approximated by elements from $T^*(K^*)$. Then by Hahn-Banach and the standard fact that $V^{**} = V$, there is $x\in V$ which witnesses this separation, so that $g(Tx) \geq 0$ for all $g\in K^*$, but $f(x) < 0$. The first part implies $Tx\in K$, since $K$ was assumed to be closed. But then $f(x) \geq 0$ by $f\in T^{-1}(K)^*$, a contradiction.
+
+\todo[inline]{It may be possible to eliminate the appeal to HB here, resulting in an even simpler argument. The following is the obvious (incomplete) attempt}
+
+Conversely, suppose that $f$ is not in the closure of the first. This means that it has a basic open neighbourhood $U$ disjoint from $T^*(K^*)$, where $U$ is of the form, for suitable $x_1,\ldots,x_n\in V$,
+\[
+	U = \{\: h\in V^* \mid |h(x_i) - f(x_i)| < 1 \quad\forall i=1,\ldots,n \:\}.
+\]
+Now suppose that we have $h\in U$ which is also in $T^{-1}(K)^*$, so that $Tx\in K$ implies $h(x) \geq 0$. \ldots
+\end{proof}
+
+\begin{proof}[Old proof ansatz for Theorem~\ref{main}]
+  For the other direction, consider the linear operator $T:\mathcal{F}(A)\to C(PA)$ given by
+  \begin{equation}
+   Tf := \D^*f = \left[ p \mapsto \int_A f\,dp - f\left( \int a \, dp \right) \right].
+  \end{equation}
+  We want to apply Lemma \ref{dualcone}, with $K=C^+(PA)$. This way $K^*=M^+(A)$, $T^{-1}K = \operatorname{Conv}(A)$, and $T^*K^*=\operatorname{PCM}(A)$. 
+  For the hypothesis of Lemma \ref{dualcone} to be satisfied, we need to show that $T$ is an isomorphic embedding. To this end,
+  
+  (WORK IN PROGRESS)
+  
+  We can then apply Lemma \ref{dualcone}, which gives
+  \begin{equation}
+   \operatorname{PCM}(A) = T^*K^* = \big(T^{-1}K\big)^* = \operatorname{Conv}(A)^*.
+  \end{equation}
+
+  First, let $f\in C(A)$. Let $a,b\in A$ and $\lambda\in [0,1]$. Consider the measure in $\mu_{a,b,\lambda} \in M^+(PA)$ given by
+  \begin{equation*}
+   \mu_{a,b} := \delta\big( \lambda\, \delta(a) + (1-\lambda) \, \delta(b)  \big)
+  \end{equation*}
+  We have then a measure in $\operatorname{PCM}(A)$ given by
+  \begin{equation*}
+   \partial\mu_{a,b} = E\mu_{a,b} - e_*\mu_{a,b} =  \lambda\, \delta(a) + (1-\lambda) \, \delta(b)  - \delta \big( \lambda\, a + (1-\lambda) \, b  \big)
+  \end{equation*}
+  so that
+  \begin{equation*}
+   \int_A f \, d(\D\mu_{a,b}) =  \lambda\, f(a) + (1-\lambda) \, f(b)  - f \big( \lambda\, a + (1-\lambda) \, b  \big) .
+  \end{equation*}
+  If now the quantity above is non-negative for every $a,b\in A$ and $\lambda\in [0,1]$, by definition $f$ is convex. 
+  
+  The converse statement is given again by Corollary \ref{converse}.  
+\end{proof}
+
+%\nocite{*}
+\bibliography{catprob}
+\addcontentsline{toc}{section}{\bibname}
+
+\end{document}
