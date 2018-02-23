@@ -1,0 +1,731 @@
+\documentclass[12pt]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{MnSymbol}
+\usepackage{tikz-cd}
+\newcommand{\bmmax}{2}
+\usepackage{bm}
+\usepackage[textsize=footnotesize,shadow]{todonotes}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,unicode=true]{hyperref}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{style.tex}
+\input{defs.tex}
+
+
+%\tracingmacros=1
+%\def\baselinestretch{2}
+
+
+\setlength{\topmargin}{-10mm}
+\setlength{\evensidemargin}{5mm}
+\setlength{\oddsidemargin}{\evensidemargin}
+\setlength{\textwidth}{120mm}
+\setlength{\textheight}{240mm}
+\setlength{\headheight}{15pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\xdef\SectionName{*}
+\xdef\SubsectionName{}
+\let\Section=\section
+\renewcommand{\section}[2][empty]{%
+  \xdef\SubsectionName{}%
+  \ifthenelse{\equal{#1}{empty}}%
+               {\xdef\SectionName{#2}%
+                \Section{#2}}%
+               {\xdef\SectionName{#1}%
+                \Section[#1]{#2}}%
+}
+
+\let\Subsection=\subsection
+\renewcommand{\subsection}[2][empty]{%
+  \ifthenelse{\equal{#1}{empty}}%
+               {\xdef\SubsectionName{#2}%
+                \Subsection{#2}}%
+               {\xdef\SubsectionName{#1}%
+                \Subsection[#1]{#2}}%
+}
+
+
+
+\pagestyle{fancy}
+\def\draft{\fbox{\tiny draft: \today}}
+%\let\draft=\relax
+\fancyfoot[L]{}
+\fancyfoot[C]{}
+\fancyfoot[R]{}
+\fancyhead[LO]{\textsc{\thesection. \SectionName} }
+\fancyhead[RO]{\draft\hspace{1mm}\textit{\textbf{\thepage}}} 
+\fancyhead[LE]{\textit{\textbf{\thepage}}\hspace{1mm}\draft} 
+\fancyhead[RE]{\textsc{\thesection. \SectionName} }
+\renewcommand{\headrulewidth}{0.4mm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title[Tropical Limits]{Dual to space of convex sets}
+\author[RM]{R. Matveev}
+\author[JWP]{J. W. Portegies}
+\begin{document}
+\thispagestyle{fancy} 
+\maketitle
+
+Let $W$ be a normed linear space, and let $Q$ be a compact convex subset of $W$. 
+In the Banach space of continuous functions on $Q$ endowed with the maximum norm, we consider the convex cone $\mathsf{C}_Q$ of convex continuous functions. By the Riesz representation theorem, the dual Banach space can be identified with the space of (signed) Radon measures $\mathcal{M}(Q)$. In this dual space, the dual cone $\mathsf{C}_Q^*$ to $\mathsf{C}_Q$ is defined as the cone of measures such that $\mu \in \mathcal{M}(Q)$ for which $\langle \phi, \mu \rangle \geq 0$ for all $\phi \in \mathsf{C}_Q$. Our objective is to represent measures in the dual cone as an integral of certain ``elementary" measures. 
+
+Similarly, in the Banach space of continuous, positively $1$-homogeneous functions on $W$, we consider the convex cone $\mathsf{CH}$ of convex positively $1$-homogeneous functions, endowed with the maximum norm on the unit ball in $W$. In fact, this space is naturally isomorphic to continuous functions on the unit sphere, and as such the dual space can be identified by measures on the unit sphere. In the dual space, we consider the dual cone  $\mathsf{CH}^*$ to $\mathsf{CH}$ and we will derive a representation formula for measures in the dual cone in terms of an integral of elementary measures.
+
+We first describe these elementary measures in detail, after which we will state the representation formulas.
+
+\section{Elementary convexity tests}
+
+Let $W$ be an $n$-dimensional normed linear space. 
+In this section we introduce certain elementary measures on a compact subset $P\subset W$. 
+
+For $k = 1, \dots, n$, a $k$-dimensional elementary convexity test on $P$ is a signed measure $\nu \in \Mcal(P)$ of the form 
+\[
+\nu = \sum_{i=1}^{k+1} a_i \delta_{p_i} - \delta_q
+\]
+for 
+\begin{itemize}
+	\item points $p_1, \dots, p_{k+1} \in P$ which are not contained in a $(k-1)$-dimensional affine subspace of $W$,
+	\item numbers $a_1, \dots, a_{k+1} \in (0,1)$ with 
+	\[
+	\sum_{i=1}^{k+1} a_i = 1 \qquad \sum_{i=1}^{k+1} a_i p_i = q
+	\] 
+\end{itemize}
+
+In other words, the points $p_1, \dots, p_{k+1}$ form the vertices of a non-degenerate $k$-dimensional simplex, and the point $q$ lies in the \emph{interior} of the simplex. 
+
+For convenience, we say that the $0$-measure is the only $0$-dimensional elementary convexity test.
+
+We denote by $\ec_P$ the union over $k$ of all $k$-dimensional elementary convexity tests on $P$. We endow the space with the weak-* subspace topology, that is the topology in duality with continuous functions on $P$.
+
+\section{Elementary convexity tests on unit sphere}
+
+Let $(W, |\cdot|)$ be an $n$-dimensional normed linear space.
+For $k=1, \dots, n$, a $k$-dimensional elementary convexity test for positively $1$-homogeneous continuous functions on $W$ is a signed measure $\nu\in \mathcal{M}(S(W))$, defined on the unit sphere in $W$, of the form
+\[
+\nu = \frac{1}{2 - |q|} \sum_{i=1}^{k+1} a_i \delta_{p_i} - |q| \delta_{q/|q|}
+\]
+for 
+\begin{itemize}
+\item points $p_1, \dots, p_{k+1} \in S(W)$ which are not contained in a $(k-1)$-dimensional linear subspace of $W$
+\item numbers $a_1, \dots, a_{k+1} \in (0,1)$ such that
+\[
+\sum_{i=1}^{k+1} a_i = 1 \qquad \sum_{i=1}^{k+1} a_i p_i = q
+\]
+\end{itemize}
+
+\section{Integration of elementary convexity tests}
+
+There is a linear map $T: C(P) \to C(\mathsf{EC}_P)$ given by
+\[
+T(u)(\nu) = \langle u, \nu \rangle
+\]
+The map $T$ is bounded.
+The adjoint linear map $T^*:\mathcal{M}(\mathsf{EC}_P) \to \mathcal{M}(P)$ is given by integration
+\[
+\langle u, T^*(\mathfrak{m}) \rangle = \int_{\mathsf{EC}} T(u)(\nu) d \mathfrak{m}(\nu).
+\]
+Note that the map $T^*$ is weak-* continuous. Let us record this in the next lemma.
+
+\begin{lemma}{le:weak-continuity-integration}
+Let $\mathfrak{m}, \mathfrak{m}_i$, for $i \in \mathbb{N}$ be (nonnegative) measures on $\mathsf{EC}_P$ with finite total measure, such that $\mathfrak{m}_i \to \mathfrak{m}$ weakly as measures, that is in duality with continuous functions on $\mathsf{EC}_P$. Then for every continuous function $f:P\to \mathbb{R}$, we have
+\[
+\lim_{i \to \infty} \langle f, T^*(m_i) \rangle = \langle f, T^*(m) \rangle
+\]
+\end{lemma}
+
+\section{Decomposition of discrete measures in dual cone}
+
+\subsection{Decomposition of discrete measures in dual cone to convex functions}
+
+Let $\mathcal{V}$ be a finite set of points in a normed linear space $W$, and denote by $P$ the closed convex hull of $\mathcal{V}$. We assume throughout that $P$ is not contained in an affine subspace. 
+Let $\mathsf{C}$ be the cone of continuous convex functions on $P$. Let $\mathsf{EC}_{\mathcal{V}}$ be the set of elementary convexity tests supported on $\mathcal{V}$. Denote by $\pi_\mathcal{V}$ the natural projection from $C(P)$ to $C(\mathcal{V})$. Note that $\pi_{\mathcal{V}}(\mathsf{C})$ is again a cone. 
+
+Denote by $\mathsf{Ext}: C(\mathcal{V}) \to \mathsf{C}$ the map that assigns to $\psi \in C(\mathcal{V})$ its convex envelope, that is the largest convex function $\phi \in \mathsf{C}$ such that $\pi_{\mathcal{V}} (\phi) \leq \psi$. 
+
+We define the epigraph of $\phi$ as
+\[
+\mathrm{epi}(\phi) = \set{ (x, y) \in P \times \mathbb{R} \middle| x \in \mathcal{V}, y \geq \phi(x) }
+\]
+The convex envelope $\mathsf{Ext}(\phi)$ is then given by
+\[
+\mathsf{Ext}(\phi) (x)= \min\set{y \in \mathbb{R} \middle| (x,y) \in \mathrm{Conv.Hull.}(\mathrm{epi}(\phi)) }
+\]
+
+Let $q \in P$. By the Carath\'eodory extension theorem for the convex hull, we know that there exist points $p_1, \dots, p_{k+1} \in \mathcal{V}$, $k \leq n$ such that $(q, \mathsf{Ext}(\phi) (q))$ is a convex combination of the points $(p_i, \phi(p_i))$, $i=1, \dots,k$.
+
+It is a direct consequence of the Carath\'eodory theorem for the convex hull that for every $q \in P$ there exists an elementary test $\nu \in \ec_P$ with negative part supported at $q$ such that
+\[
+\langle \mathrm{Ext}(\phi), \nu\rangle = 0.
+\]
+
+\begin{lemma}{le:dual-cone-discrete}
+The dual cone to $\pi_{\mathcal{V}}(\mathsf{C})$ in $\mathcal{M}(\mathcal{V})$ is cone-spanned by elementary convexity tests supported on $\mathcal{V}$.
+\end{lemma}
+
+\begin{Proof}
+We first claim that a function $\psi \in C(\mathcal{V})$ has a convex extension, that is a function $\phi \in \mathsf{C}$ such that $\pi_{\mathcal{V}}(\phi) = \psi$, if and only if 
+\[
+\langle \psi , \nu \rangle \geq 0
+\]
+for every $\nu \in \mathsf{EC}_{\mathcal{V}}$. The ``only if" part of the statement is clear. 
+
+To see the ``if" part, note that it suffices to show that if 
+\[
+\langle \psi, \nu \rangle \geq 0, \text{ for all } \nu \in \mathsf{EC}_{\mathcal{V}}
+\]
+then $\pi_{\mathcal{V}} \circ \mathsf{Ext}(\psi) = \psi$. If not, there exists a point $q \in \mathcal{V}$ such that $\psi(q) > \mathsf{Ext}(\psi)(q)$. However, by the Carath\'eodory theorem for the convex hull, we know that there exist points $p_1, \dots, p_{k+1} \in \mathcal{V}$ with $k \leq n$ such that $(q, \mathsf{Ext}(\phi)(q))$ is a convex combination of the points $(p_i, \phi(p_i))$ for $i=1, \dots, k$, and the points $p_1, \dots, p_{k+1}$ are not contained in a $(k-1)$-dimensional subspace. Hence, there exists an elementary convexity test $\nu \in \ec_P$ such that $\langle \mathsf{Ext}(\phi), \nu \rangle = 0$. 
+Because $\psi(q) > \mathsf{Ext}(\psi)(q)$, we have
+\[
+\langle \psi , \nu \rangle < 0,
+\]
+which is a contradiction. 
+This finishes the proof of our claim that $\psi \in C(V)$ has a convex extension if and only if $\langle \psi, \nu \rangle \geq 0$ for every $\nu \in \ec_{\mathcal{V}}$.
+
+We now rephrase this claim as 
+\[
+	\pi_{\mathcal{V}}(\mathsf{C}) = \conespan(\ec_{\mathcal{V}})^* 
+\]
+By taking dual cones again, and using the reflexivity of the spaces, we find that
+\[
+	\pi_{\mathcal{V}}(\mathsf{C})^* = \conespan(\ec_{\mathcal{V}})^{**} = \conespan(\ec_{\mathcal{V}})
+\]
+\end{Proof}
+
+Since the dual cone $\pi_{\mathcal{V}}(\mathsf{C})$ is cone-spanned by finitely many measures, it is a consequence of the previous lemma that the cone $\pi_{\mathcal{V}}(\mathsf{C})$ is polyhedral.
+
+\subsection{Decomposition of discrete measures in dual cone to convex positively $1$-homogeneous functions}
+
+We are now going to derive a similar statement for discrete measures on the sphere that are in the dual cone. 
+In this section, $\mathcal{V}$ is a finite set of points in the unit sphere $S(W)$ of the normed $n$-dimensional linear space $W$.
+We assume that $\mathcal{V}$ is not contained in any strict subspace of $W$. 
+We denote as before by $\ech_{\mathcal{V}}$ the elementary convexity tests for $1$-homogeneous functions supported on $\mathcal{V}$. We denote the natural projection from $C_H(S(W))$ to $C(\mathcal{V})$ by $\pi_{\mathcal{V}}$. 
+
+In this case, the extension map $\mathsf{Ext}$ is only defined on those positively $1$-homogeneous functions $\phi$ for which there exists a linear map $L: W \to \mathbb{R}$ such that the function $\pi_{\mathcal{V}}(L) + \phi$ is nonnegative. For such functions, it is the largest positively $1$-homogeneous function $\phi: W \to \mathbb{R}$ such that $\pi_{\mathcal{V}} \circ \phi \leq \psi$. 
+
+For such functions, the positively $1$-homogeneous convex envelope $\mathsf{Ext}(\phi)$ is again given by 
+\[
+\mathsf{Ext}(\phi)(x) = \min \set{ y \in \Rbb \middle| \mathrm{Conv.Hull.}(\mathrm{epi}(\phi))}
+\]
+and this extension is automatically $1$-homogeneous.
+
+\begin{lemma}{le:cone-span-sphere}
+	The dual cone to $\pi_{\mathcal{V}}(\mathsf{CH})$ is cone-spanned by the set of elementary convexity tests for positively $1$-homogeneous functions in $\ech_{\mathcal{V}}$.	
+\end{lemma}
+
+\section{Improved decomposition of discrete measures in dual cone}
+
+\subsection{Improved decomposition of discrete measures in dual cone to convex functions}
+
+\begin{lemma}{le:truncated-dual-cone-discrete}
+Let $K$ be the truncated dual cone given by
+\[
+K = \{ \mu \in \mathcal{M}(\mathcal{V}): \ \langle \psi , \mu \rangle \geq 0 \text{ for all } \psi \in \pi_{\mathcal{V}}(\mathsf{C}), \ |\mu| \leq 2 \}
+\]
+The truncated dual cone $K$ is a convex and compact. Its extreme points are exactly $0$ and elementary convexity tests supported in $\mathcal{V}$.
+\end{lemma}
+
+Before we prove this lemma, we formulate an intermediate result. 
+
+\begin{lemma}{le:extension-to-linear-lem}
+Let $x, p_1, p_2, q \in \mathbb{R}^n$ be four distinct points such that $q$ lies on the line segment between $p_1$ and $p_2$, that is $q \in (p_1, p_2)$. Every convex function defined on the convex hull of $p_1, p_2$ and $x$, which vanishes on the line segments $[p_1, p_2]$ and $[q,x]$, in fact vanishes on the convex hull of $p_1, p_2$ and $x$.
+\end{lemma}
+
+\begin{lemma}{le:extension-to-linear}
+Let a subset $K \subset P$ be compact and convex, and let $\nu$ be an elementary convexity test of which the negative part is supported at $q \in P$. Suppose a continuous, convex function $\phi$ is linear on both $K$ and on the convex hull of the support of $\nu$. Then $\phi$ is linear on the convex hull of the union of $K$ and the support of $\nu$.
+\end{lemma}
+
+\begin{Proof}
+This is a direct consequence of the previous lemma.
+\end{Proof}
+
+\begin{Proof}
+By the previous lemma we may decompose $\mu$ as a sum of elementary convexity tests $\nu_i$ supported in $\mathcal{V}$
+\[
+\mu = \sum_{i=1}^N \lambda_i \nu_i
+\]
+with $\lambda_i > 0$. 
+
+We construct a directed graph in the following way. 
+The vertices are the numbers $\{1, \dots, N \}$. 
+There is a directed edge from $i$ to $j$ if there is a $q \in P$ such that $\nu_i(q) > 0$ and $\nu_j(q) < 0$. 
+
+For every index $i$, we denote by $D(i)$ the vertices downstream from $i$, including $i$, and define
+\[
+K(i) = \mathrm{Conv.Hull.} \bigcup_{j \in D(i)} \supp \nu_j
+\]
+Note at this stage that it is a direct consequence of Lemma \ref{le:extension-to-linear} that if a function is linear on $\supp \nu_j$ for all $j \in D(i)$, then it is linear on $K(i)$.
+
+We now claim that for every extreme point $p$ of $K(i)$, $\mu(p) > 0$. Indeed, by construction of the set $K(i)$, every extreme point $p$ of $K(i)$ is the extreme point of $\supp \nu_j$ for some $j \in D(i)$. So $\nu_j(p) > 0$. If $\mu(p) \leq 0$, necessarily there exists a $k \in D(i)$ such that $\nu_k(p) < 0$. This contradicts the extremality of $p$.
+
+Now let $q \in P$ be such that $\mu(q) < 0$. Then there exists an $i \in \{1, \dots, N\}$ such that $\nu_i(q) < 0$. By Carath\'eodory's convex hull theorem there exists an elementary test $\nu$, the positive part of which is supported on the extreme points of $K(i)$, and the negative part supported at $q$. 
+
+We now claim that the for small enough $t > 0$, the measure $\mu - t \nu$ has the same support as $\mu$, and for every $\psi \in \pi_{\mathcal{V}}(\mathsf{C})$,
+\[
+\langle \psi, \mu - t \nu \rangle \geq 0.
+\]
+Since the cone $\pi_{\mathcal{V}}(C)$ is polyhedral, there exist finitely many piecewise linear convex functions $\psi_1, \dots , \psi_M$ such that it suffices to check that
+\[
+\langle \psi_j, \mu - t \nu \rangle \geq 0
+\]
+for all $j =1, \dots, M$ and sufficiently small $t > 0$.
+
+If not, there exists a $j \in \{1, \dots, M\}$ such that 
+\[
+\langle \psi_j, \mu \rangle = 0
+\]
+and 
+\[
+\langle \psi_j, \mu - t \nu \rangle < 0
+\]
+for all $t>0$. The first equality implies that $\psi_j$ is linear on every simplex occuring inducing one of the $\nu_i$'s. Hence it is linear on the simplex inducing $\nu$, and 
+\[
+\langle \psi_j, \nu \rangle = 0,
+\]
+which is a contradiction.
+
+If there exists another point $z \in \mathcal{V}$, that is $z \neq q$, such that $\mu(z) < 0$, we may apply the above construction to find another elementary test $\tilde{\nu}$, with center $z$ such that for small enough $t>0$, 
+\[
+\langle \psi , \mu - t \tilde{\nu} \rangle \geq 0
+\]
+for all $\psi \in \pi_{\mathcal{V}}(\mathsf{C})$. Now for small $t$, $\mu$ is the linear interpolation between
+\[
+\mu + t \nu - t \tilde{\nu} \quad \text{ and } \quad \mu - t\nu + t\tilde{\nu}
+\]
+It follows that $\mu$ is not extreme.
+
+If, instead, there are no elements $v \in \mathcal{V}$, $v \neq q$ such that $\mu(v) <0$, then every elementary convexity test with $q$ as negative atom is caused by $q$. If there are multiple of those, then $\mu$ is not extreme, as we can do the same construction as above.
+\end{Proof}
+
+\begin{corollary}{co:decomposition-discrete}
+Let $\mu \in \mathcal{M}(\mathcal{V})$ be in the dual cone to $\pi_{\mathcal{V}} (\mathsf{C})$. Then there exists a discrete nonnegative measure $\mathfrak{m}$ such that $|\mathfrak{m}|_{TV} = |\mu|_{TV}/2$ and 
+\[
+\mu = T^*(\mathfrak{m})
+\]
+\end{corollary}
+
+\begin{Proof}
+Since the statement is trivial if $\mu$ is the zero-measure, we may by scaling assume that $|\mu|_{TV} = 2$. Since $K$ is polyhedral and compact, it is the convex combination of its extreme points. Hence there exist elementary convexity tests $\nu_1, \dots, \nu_N \in \mathsf{EC}_{\mathcal{V}}$, and constants $\lambda_1, \dots, \lambda_N$ with
+\[
+\sum_{i=1}^N \lambda_i =1
+\]
+and
+\[
+\mu = \sum_{i=1}^N \lambda_i \nu_i.
+\]
+\end{Proof}
+
+\subsection{Improved decomposition of discrete measures in dual cone to convex homogeneous functions}
+
+\begin{lemma}{le:cones-without-extremal-rays}
+	Let $W$ be a linear space and let $K$ be a closed, convex, polyhedral cone in $W$.
+	If there exists no $\xi \in W^*\backslash \{ 0\}$ such that $\langle w, \xi \rangle \geq 0$ for all $w \in K$, then $K = W$. Otherwise,  there exists a $\xi \in W^* \backslash \{0\}$ and a subspace $V \subset W$ such that such that $\langle w, \xi \rangle > 0$ for all $w \in W \backslash V$ and $\langle w, \xi \rangle = 0$ for all $w \in V$ and $K$ is the convex hull of $V$ and a finite number of extremal rays.
+\end{lemma}
+
+\begin{Proof}
+	Consider the dual cone $K^*$ to $K$. 
+	Let $k$ be the dimension of the \emph{linear} span of $K^*$.  	
+\end{Proof}
+
+This is a proof of the discrete decomposition of measures on unit sphere:
+
+\begin{proposition}{pr:sphere-decomposition-discrete}
+	Let $\mu \in \mathcal{M}(\mathcal{V}) \cap \mathsf{CH}^*$.
+	Then there exists a discrete, nonnegative measure $\mu \in \mathcal{M}_+( \ech_\mathcal{V} )$ such that
+	\[
+		\mu = T^* \mfrak
+	\]
+	and $|\mfrak|_{TV} = |\mu|_{TV}/2$.
+\end{proposition}
+
+\begin{Proof}
+	We prove the statement by induction on the dimension of $W$. If $\dim W = 1$, the statement is obvious. Now let us assume that the statement is proven dimension $\leq n-1$ and let $W$ be normed linear space of dimension $n$.
+	
+	Denote the truncated dual cone by $C_2$, that is
+	\[
+	C_2 = \set{ \mu \in \mathcal{M}(\mathcal{V})  \middle| \langle \phi, \psi \rangle \geq 0 \text{ for all } \psi \in \mathsf{CH}, |\mu|_{TV} \leq 2 }
+	\]
+	and note that it suffices to show that the extreme points of $C_2$ are exactly the elementary convexity tests in $\ech_{\mathcal{V}}$. 
+	
+	Note that the only extreme measures which are positive are positive elementary convexity tests.
+	
+	Hence, we select a $\mu \in C_2$ which is extreme and for which there exists a $q \in \mathcal{V}$ such that $\mu(q) < 0$. Our goal is to show that $\mu$ is an elementary convexity test.
+	
+	We may decompose $\mu$ as a sum of elementary convexity tests on the sphere $\nu_i \in \ech_{\mathcal{V}}$ supported in $\mathcal{V}$
+	\[
+	\mu = \sum_{i=1}^N \lambda_i \nu_i
+	\]
+	with $\lambda_i > 0$.
+	
+	We construct a directed graph. The vertices are the numbers $\{1, \dots, N \}$ and there is a directed edge from $i$ to $j$ if there is a $p \in \mathcal{V}$ such that $\nu_i(p) > 0$ and $\nu_j(p) < 0$. 
+	
+	For an index $i$ we let $D(i)$ denote the set of vertices downstream from $i$, including $i$, and we set
+	\[
+	K(i) = \mathrm{Conv.Hull.} \bigcup_{j \in D(i)} \supp \nu_j
+	\]
+	Let $L$ denote the linear part of the cone $K(i)$. Let us remark at this stage that if a function is affine on $\supp \nu_j$ for every $j \in D(i)$, then the function is affine on $K(i)$.
+	
+	We claim that $K(i)$ is the convex hull of points $p \in \mathcal{V}$ such that there exists a $j \in D(i)$ such that $\nu_j(p) > 0$ \emph{and} $\mu(p) > 0$. 
+	
+	It is clear that $K(i)$ is the convex hull of extreme points of $K(i)$ and points $p \in L$ for which there exists a $j \in D(i)$ with $\nu_j(p) > 0$. 
+
+	If $p$ is an extreme point of $K(i)$, there exists a $j \in D(i)$ such that $\nu_j(p) > 0$. But because $p$ is extreme, $D(j) = \{j\}$, that is there are no other vertices downstream from $j$. Hence $\mu(p) > 0$. 
+
+	To finish the proof of the claim, it suffices to show that if $p \in L$ such that $\nu_j(p) > 0$ for some $j \in D(i)$, that then $p$ is the convex combination of points $z \in L \cap K(i)$ such that $\mu(z) > 0$. This is more complicated, and we will need the induction hypothesis.
+		
+	We denote by $DL(i)$ the intersection of $D(i)$ with the set of indices $j$ such that $\supp \nu_j \subset L$. We also define
+	\[
+	\mu^L := \sum_{j \in DL(i)} \lambda_j \nu_j
+	\]
+	
+	
+	
+	By the induction hypothesis, there exist elementary tests $\mu_1, \dots, \mu_M$ supported on $\mathcal{V} \cap L$ and scalars $b_i > 0$ such that
+	\[
+	\mu^L = \sum_{k = 1}^M b_i \mu_i
+	\]
+	and moreover 
+	\[
+	\sum_{i=1}^{M} b_i = |\mu^L|_{TV} / 2
+	\]
+		
+	
+	It is clear that
+	\[
+	K(i) = \mathrm{Conv.Hull.} \bigcup_{j \in D(i)} \supp (\nu_j)_+
+	\]
+	
+
+	If $p \in L$, but $\mu(p) < 0$, then also $\mu^L(p) < 0$. Therefore, there exists a $k \in \{1, \dots, M\}$ with $\mu_k (p) < 0$. Because of the construction of $\mu_k$, $\mu(z) > 0$ for all $z \in \supp (\mu_k)_+$. It follows that $p$ can be written as the convex combination of points $z \in K(i) \cap L$ with $\mu(z) > 0$. This finishes the proof of the claim.
+	
+	By the Carath\'eodory convex hull theorem, there exists an elementary convexity test $\nu$ with $\supp \nu \subset K(i)$ such that $\nu(q) < 0$ and for every $z \in \supp \nu_+$ it holds that $\mu(z) > 0$. We claim that for small enough $t > 0$, still
+	$\mu - t \nu \in \mathsf{CH}^*$.
+
+	Because the cone $\mathsf{CH}$ is polyhedral, there exist functions $\psi_1, \dots, \psi_m \in \mathsf{CH}$ such that a measure $\sigma \in \mathcal{M}(\mathcal{V})$ if and only if
+	\[
+	\langle \psi_j, \sigma \rangle  \geq 0
+	\]
+	for all $j =1, \dots, m$.  Hence it suffices to check for $t$ small enough,
+	\[
+	\langle \psi_j, \mu - t \nu \rangle \geq 0
+	\]
+	
+	If not, there exists a $k \in \{1, \dots, m \}$ such that 
+	\[
+		\langle \psi_k, \nu \rangle < 0
+	\]	
+	and 
+	\[
+		\langle \psi_k, \mu \rangle = 0
+	\] 
+	However, because $\psi_k$ is convex and positively $1$-homogeneous, the last inequality direct implies that
+	\[
+	\langle \psi_k, \nu_j \rangle = 0
+	\]
+	for every $j \in \{1, \dots, N\}$. Hence $\psi_k$ is linear on $\supp \nu_j$ for every $j \in \{1, \dots, N\}$ and in particular $\psi_k$ is linear on the support of $\nu$, that is $\langle \psi_k, \nu \rangle = 0$. This is a contradiction. We have showed that for $t > 0$ small enough, indeed $\mu - t\ nu \in \mathsf{CH}^*$.
+	
+	Now suppose there exists a $\tilde{q} \in \mathcal{V} \backslash \{ q \}$ such that $\mu(\tilde{q}) < 0$. Then we can apply the above construction to find an elementary convexity test $\tilde{\nu}$ with $\tilde{\nu}(q) < 0$ and for every $z \in \supp \tilde{\nu}_+$, it holds that $\mu(z) > 0$. Then for $t$ small enough, 
+	\[
+	\mu_t := \mu + t \nu - t \tilde{\nu} \in \mathsf{CH}^* 
+	\]
+	and $|\mu_t|_{TV} = 2$. This contradicts the assumption that $\mu$ is extreme.
+	
+	If instead $q$ is the only point in $\mathcal{V}$ such that $\mu(q) < 0$, but there is another way of writing $q$ as the convex combination ... 
+	
+	If there is only one way of writing $q$ as a convex combination, .
+\end{Proof}
+
+\section{Approximation by discrete measures}
+
+\begin{lemma}{le:correction-linear}
+	Let $t_1, \dots, t_{n+1}$ be the vertices of a non-degenerate simplex in $\mathbb{R}^n$. 
+	Then there exists a bounded linear map $B: \mathbb{R}^{n+1} \to  \mathcal{M}((t_j)_{j=1}^{n+1})$ such that for every $b \in \mathbb{R}^{n+1}$ the vector vector $a = B(b)$ satisfies
+	\[
+	\langle 1, B(b) \rangle = b_{n+1}
+	\]
+	and for every $j =1 , \dots, n$,
+	\[
+	\langle x \mapsto x_j, B(b) \rangle = b_j
+	\]
+\end{lemma}
+
+\begin{lemma}{le:adding-tests}
+Let $\mathcal{W}$ be a finite subset of $\mathbb{R}^n$ and let $P$ be the convex hull of $\mathcal{W}$. Let $q \in \mathcal{W}$ be an interior point of $P$. Then there is a measure $\chi \in \mathsf{dC}$ with $|\chi|_{TV} \leq 2$ and a constant $c > 0$ such that for every nonnegative $\phi \in \mathsf{C}$ with $|\phi|_\infty = 1$ and $\phi(q) = 0$, it holds that
+\[
+\langle \phi , \chi \rangle > c
+\]
+\end{lemma}
+
+\begin{Proof}
+Let $p_1, \dots, p_M \in \mathcal{W}$ be the extreme points of $P$. 
+Choose weights $a_1, \dots, a_M > 0$ such that
+\[
+\chi := \sum_{i=1}^M a_i \delta_{p_i}- \delta_q
+\]
+Now, if $\phi \in \mathsf{C}$ is such that $\phi(q) = 0$ and $|\phi|_\infty = 1$, then by convexity of $\phi$ there exists a $j \in \{1, \dots, M\}$ such that $\phi(p_j) = 1$. Hence,
+\[
+\langle \phi , \chi \rangle \geq \min_{i  =1 , \dots, M } a_i > 0.
+\]
+\end{Proof}
+
+\begin{lemma}{le:approximation-discrete}
+Let $Q$ be a nondegenerate, compact, convex subset of $\mathbb{R}^n$ and let $\mathsf{C}$ denote the cone of continuous, convex functions on $Q$. Let $P$ be a polyhedral, nondegenerate, compact, convex subset of the interior of $Q$. Let $\mathcal{W}$ be a finite subset of $P$, such that the convex hull of $\mathcal{W}$ is equal to $P$, and such that there is a point in $\mathcal{W}$ which lies in the interior of $P$. Then, there exists a constant $C> 0$ such that:
+
+
+For every finite subset $\mathcal{V}$ of $P$, with $\mathcal{V} \supset \mathcal{W}$, and every $\mu \in \mathsf{dC}$ supported on $P$, there exists a measure $\mu_{a} \in \mathsf{dC}$ supported on $\mathcal{V}$ such that $|\mu_a|_{TV} = |\mu|_{TV}$ and for every continuous function $f \in C(P)$ with modulus of continuity $\omega:(0,\infty) \to (0,\infty)$,
+\[
+|\langle f , \mu - \mu_a \rangle | \leq C \cdot \omega(R) \cdot  |\mu|_{TV} 
+\]
+where $R$ is the smallest radius such that
+\[
+P \subset \bigcup_{v \in \mathcal{V}} B(v, R)
+\]
+\end{lemma}
+
+\begin{Proof}
+First choose a linear map $A: \mathcal{M}(P) \to \mathcal{M}(\mathcal{V})$ such that for all continuous $f:P \to \mathbb{R}$, with modulus of continuity $\omega:(0,\infty) \to (0,\infty)$, and all $\mu \in \mathcal{M}(P)$,
+\[
+|\langle f, \mu \rangle - \langle f, A(\mu) \rangle | \leq  \omega(R) \cdot |\mu|_{TV}
+\]	
+Denote by $\mathrm{Ev}: \mathcal{M}(\mathcal{V}) \to \mathbb{R}^{n+1}$ the map given by 
+\[
+\mathrm{Ev}(\mu)_{n+1} = \langle x \mapsto 1, \mu \rangle
+\]
+and for $i = 1, \dots, n$,
+\[
+\mathrm{Ev}(\mu)_i = \langle x \mapsto x_i , \mu \rangle
+\]
+Select a nondegenerate simplex in $\mathcal{W}$ and let $B$ be the map from Lemma \ref{le:correction-linear}.
+
+Then $\mu$ and $A(\mu) - B \circ \mathrm{Ev} \circ A(\mu)$ are still very close, in the sense that for all continuous $f:P \to \mathbb{R}$ with modulus of continuity $\omega:(0,\infty) \to (0,\infty)$ we may estimate
+\[
+\begin{split}
+|\langle f, \mu \rangle & - \langle f, A(\mu) - B \circ \mathrm{Ev} \circ A(\mu) \rangle |\\
+&\leq |\langle f, \mu - A(\mu)\rangle| 
++ |\langle f, B \circ \mathrm{Ev} \circ A(\mu) \rangle| \\
+& \leq |\langle f, \mu - A(\mu)\rangle| 
++ |\langle f, B \circ \mathrm{Ev} (A(\mu) - \mu) \rangle|
+\end{split}
+\]
+where we could add $\mu$ in the last term since $\mu \in \mathsf{dC}$ implies that $\mathrm{Ev}(\mu) = 0$. As the modulus of continuity of the functions $x \mapsto x_i$ is $1$, and of the function $x \mapsto 1$ component is zero, we find
+\[
+| \mathrm{Ev}(A(\mu) - \mu) | \leq n
+\]
+As a consequence,
+\[
+\begin{split}
+|\langle f, \mu \rangle & - \langle f, A(\mu) - B \circ \mathrm{Ev} \circ A(\mu) \rangle |\\
+&\leq \omega(R) \cdot |\mu|_{TV} + |f|_\infty \cdot |B| \cdot n \cdot |\mu|_{TV}
+\end{split}
+\]
+
+Now note that there exists a constant $C_1$ such that for every convex, continuous $\phi \in \mathsf{C}$ defined on $Q$,
+\[
+\mathrm{Lip}(\phi ) \leq C_1 \sup_{x \in Q} \phi(x)
+\]
+
+Let $\chi$ and $c>0$ be defined as in Lemma \ref{le:adding-tests}. 
+We claim that
+\[
+A(\mu) - B \circ \mathrm{Ev} \circ A(\mu) + \chi \cdot C_1 \cdot |B| \cdot n \cdot |\mu|_{TV} / c \in \mathsf{dC}
+\]
+
+First note that the measure on the left-hand side evaluates to zero on affine functions. 
+Therefore, it suffices to show that for every \emph{nonnegative} $\phi \in \mathsf{C}$ with $\phi(q) = 0$ and $\sup_{x \in Q} \phi(x) = 1$ we have
+\[
+\langle \phi, A(\mu) - B \circ \mathrm{Ev} \circ A(\mu) + \chi \cdot C_1 \cdot |B| \cdot n \cdot |\mu|_{TV} / c \rangle \geq 0
+\]
+This, however, is a direct consequence of the construction.
+\end{Proof}
+
+
+
+
+\section{Decomposition of general measures in dual cone}
+
+\begin{proposition}{le:dual-cone-Rn}
+Let $\mu \in \mathsf{dC}$. Then there exists a Radon measure $\mathfrak{m}$ on $\mathsf{EC}$ such that $|\mathfrak{m}|_{TV} = |\mu|_{TV}/2$ and for all $f \in C(P)$,
+\[
+\langle f, \mu \rangle = \int_{\mathsf{EC}} \langle f , \nu \rangle d \mathfrak{m}(\nu)
+\]
+\end{proposition}
+
+\begin{Proof}
+Without loss of generality we may assume that $|\mu|_{TV} = 2$. 
+By Lemma \ref{le:approximation-discrete} there exists a sequence of discrete measures $\mu_i \in \mathsf{dC}$, $i \in \mathbb{N}$ with $|\mu_i|_{TV} = 2$ such that for	every $f \in C(P)$,
+\[
+\langle f , \mu \rangle = \lim_{i \to \infty} \langle f, \mu_i \rangle
+\]
+By the decomposition result in Corollary \ref{co:decomposition-discrete} for discrete measures in the dual cone, there exist discrete measures $\mathfrak{m}_i$ with $|\mathfrak{m}_i|_{TV} = 1$ on $\mathsf{EC}$ such that
+\[
+\langle f, \mu_i \rangle = \int_{\mathsf{EC}} \langle f, \nu \rangle d \mathfrak{m}_i(\nu)
+\]
+By compactness, there exist a converging subsequence, that we do not denote differently, $\mathfrak{m}_i \to \mathfrak{m}$. 
+
+Hence
+\[
+\begin{split}
+\langle f, \mu \rangle
+& = \lim_{i \to \infty} \langle f, \mu_i \rangle \\
+& = \lim_{i \to \infty} \int_{\mathsf{EC}} \langle f, \nu \rangle d \mathfrak{m}_i(\nu) \\
+& = \lim_{i \to \infty} \int_{\mathsf{EC}} \langle f, \nu \rangle d \mathfrak{m}(\nu)
+\end{split}
+\]
+where we applied Lemma \ref{le:weak-continuity-integration} in the last line.
+\end{Proof}
+
+\section{Grothendieck construction}
+
+Let $V$ be a finite-dimensional linear space.
+Define
+\[
+\mathcal{A} := \set{ A \subset V \middle| A \text{ closed and convex} }
+\]
+For $A \in \mathcal{A}$ define $F_A^*: V^* \to[] [-\infty, \infty]$ by
+\[
+F_A^*(\ell) := \sup_{x \in A} \ \langle x, \ell \rangle
+\]
+The function $F_A^*$ is convex and positively $1$-homogeneous.
+In case the origin is contained in $A$, the function $F_A^*$ is the Legendre transform of the Minkowski functional of the convex set $A$, denoted by $F_A: V \to[] [-\infty, \infty]$ and defined as
+\[
+F_A(x) := \inf \set{ \lambda > 0 \ \middle| \ x \in \lambda A }
+\]
+that is 
+\[
+F_A^*(\ell) = \sup_{x \in A \backslash \{ 0 \}} \frac{\langle x, \ell \rangle}{ F_A(x) }
+\]
+
+Note that for $A, B \in \mathcal{A}$,
+\[
+F^*_{A + B} = F^*_A + F^*_B
+\]
+where $A+B$ denotes the Minkowski sum of the sets $A$ and $B$.
+
+It follows moreover that for every convex, positively $1$-homogeneous function $G^*: V^* \to[] [-\infty, \infty]$ there exists a closed convex set $A$ such that $F_A^* = G^*$.
+
+As a consequence, there is a one-to-one correspondence between the Grothendieck construction applied to convex sets, and the functions which are the difference of two positively $1$-homogeneous convex functions. We claim that the latter class of functions is exactly the class of positively $1$-homogeneous $\mathrm{DC}$ functions, where $\mathrm{DC}$ functions are defined as the difference of convex functions. To see the claim, suppose a $\mathrm{DC}$ function $f : V \to[] [-\infty, \infty]$ has a representation 
+\[
+f = \phi - \psi
+\]
+with $\phi$ and $\psi$ convex. Since $f(0) = 0$ by positive homogeneity, we may without loss of generality assume that $\phi(0) = \psi(0) = 0$. Now to get an alternative representation of $f$ as the difference of positively $1$-homogeneous convex functions, we can just look at the tangent cones of $\phi$ and $\psi$ at $0$
+\[
+\tilde{\phi}(x) = \lim_{h \downarrow 0 } \frac{\phi(h x)}{h}  \qquad \tilde{\psi}(x) = \lim_{h \downarrow 0 } \frac{\psi(h x)}{h}.
+\]
+Then $f$ can also be represented as
+\[
+f = \tilde{\phi} - \tilde{\psi}.
+\]
+
+We conjecture that every continuous positive $1$-homogeneous function is the limit of a sequence of differences of 1-homogeneous convex functions, where the convergence is uniform on compact sets. 
+
+The dual space to the continuous positively $1$-homogeneous functions can be identified by Radon measures on the sphere.
+
+
+\begin{lemma}{le:metric-comparison-general}
+Let $|\cdot|$ be a norm on $V$ and let $|\cdot|_*$ denote the dual norm on $V^*$. Denote by $d_H$ the Hausdorff distance between closed subsets of $V$ induced by the norm $|\cdot|$. Then
+
+\[
+d_H(A, B) = \sup_{\ell \in V^*, |\ell|_* \leq 1} | F_A^*(\ell) - F_B^*(\ell) |
+\]
+\end{lemma}
+\begin{Proof}
+Let $\ell \in V^*$ with $|\ell|_* \leq 1$. Then, for $x, y \in V$
+\[
+| \langle x, \ell \rangle - \langle y, \ell \rangle | \leq |x - y|
+\]
+Hence
+\[
+|F_A^*(\ell) - F_B^*(\ell) | \leq d_H(A,B)
+\]
+
+Now let $x \in B \backslash A$. Let $y_0$ be the closest point to $x$ in $A$, that is for all $y \in A$,
+\[
+| y - x | \geq | y_0 - x|
+\]
+Such a $y_0$ exists as $A$ is closed and convex. 
+Select a real number $t < |y_0 - x|$. Let $B$ denote the closed unit ball in $V$ according to the norm $|\cdot|$. Then 
+\[
+(x + t B) \cap A = \emptyset
+\]
+By the Hahn-Banach separation theorem there exists a functional $\ell_0 \in V^*$ with $|\ell_0|_* = 1$ such that
+\[
+\sup_{y \in A} \langle y, \ell_0 \rangle < \inf_{z \in x + t B} \langle z, \ell_0 \rangle
+\]
+Since $x + t \frac{y_0 - x}{|y_0 - x|} \in x + t B$ we find
+\[
+\langle y_0, \ell_0 \rangle <\inf_{z \in x + t B} \langle z, \ell_0 \rangle \leq \langle x, \ell_0 \rangle + \frac{t}{|y_0 - x|} \langle y_0 - x, \ell_0\rangle
+\]
+So
+\[
+\langle y_0 - x , \ell_0 \rangle < \frac{t}{|y_0 - x|} \langle y_0 - x, \ell_0 \rangle
+\]
+As a consequence
+\[
+F_A^*(\ell_0) - F_B^*(\ell_0) \geq |y_0 - x|
+\]
+and thus
+\[
+F_A^*(\ell_0) - F_B^*(\ell_0 ) \geq d_H(A,B)
+\]
+\end{Proof}
+
+
+Let $(V,|\cdot|)$ be a finite-dimensional normed linear space.
+Let $C\subset V$ be a convex cone. 
+Define the collection $\mathcal{A}$ as the collection of closed, convex subsets of $V$ at finite Hausdorff distance from the cone $C$, that is
+\[
+\mathcal{A} := \set{ A \subset V \ \middle| \ d_H(A, C) < \infty, A \text{ closed and convex} }
+\]
+We endow $\mathcal{A}$ with the Hausdorff distance.
+
+We define the map $f_\cdot: \mathcal{A} \to C^0( V^\ast, [-\infty,\infty] )$ by
+\[
+f_A(\ell) := \sup_{x \in A} \ \langle x, \ell \rangle
+\]
+For a fixed convex set $A \in \mathcal{A}$, the function $f_A$ is convex and (positively) $1$-homogeneous on $V^*$.
+
+Conjecture: Conversely, every convex, positively $1$-homogeneous function $g$ on $V^*$ induces a unique closed convex set $A$ such that $f_A = g$, indeed $A$ is given by
+\[
+A = \set{ x \in V \middle|\ \langle x, \ell \rangle \leq g(\ell) \text{ for all } \ell \in V^* }
+\]
+The set $A$ is clearly convex. Let $\ell \in V^*$. We need to show that
+\[
+\sup_{x \in A} \ \langle x, \ell \rangle = g(\ell)
+\]
+
+
+%\section{Leftovers -- don't look}
+%
+%For $\phi$ continuous, the integral
+%\[
+%L_\phi(f_A) := \int_0^{2\pi} \phi(\theta)d f_A' (\theta)
+%\]
+%is well-defined for every $A \in \Acal$. 
+%
+%
+%Define $\Fcal$ to be the function space of absolutely continuous functions $f$ on $S^1$ such that $f'$ has total variation bounded by $4 \pi \sup f$, endowed with the uniform topology. Then for every $\phi$, the function $L_\phi: \Fcal \to \Rbb$ is continuous.
+%This follows directly from approximating $\phi$ in the uniform topology by a smooth function and integration by parts.
+%
+%The conjecture is that actually all continuous linear functionals on $\Acal$ are of the form $L_\phi(f_\cdot)$.
+
+
+%\tableofcontents
+
+\setcounter{section}{-1}
+
+
+
+
+% \renewcommand{\thesection}{Q}
+% \section{Questions:}\label{s:questions}
+% \input{section-questions.tex}
+
+ \bibliographystyle{plain}
+ \bibliography{ReferencesEntropy}
+
+ %\renewcommand{\thesection}{\relax}
+ %\newpage\section{All statements}\repeatallclaims
+\end{document}
