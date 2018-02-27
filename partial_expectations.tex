@@ -225,15 +225,6 @@ This map is the adjoint of
 \]
 We denote the image of the positive cone $\partial(M^+(PA))$ by $\PCM(A)$. It is a convex cone in $M(A)$. The fact that this cone is contained in the kernel of $e : M(A) \to A\otimes\R$ indicates that it is a cohomological object.
 
-\begin{lemma}
-$\PCM(A)$ is closed.
-\label{PCMclosed}
-\end{lemma}
-
-\begin{proof}
-$M^+(PA)$ has a compact convex base given by $PPA$.
-\end{proof}
-
 Let also $\operatorname{Conv}(A)$ be the space of convex and continuous real-valued functions on $A$, where $f\in C(A)$ is \emph{convex} if
 \[
 	f\left(\frac{x + y}{2}\right) \leq \frac{f(x) + f(y)}{2}	
@@ -276,6 +267,21 @@ By rescaling (with a positive scalar), we can achieve that $k_{\e}$ is given in 
   By the generalized Jensen's inequality (Lemma \ref{jensen}), the quantity in the square brackets is non-negative, $\mu$ is in $M^+(PA)$, and so the whole expression is non-negative.
 \end{proof}
 
+For $F\subseteq A$ finite, let us denote by $\Conv(F)$ the cone of functions $F\to\R$ which are restrictions of convex continuous functions $A\to\R$. Similarly, we write $\PCM(F)\subseteq MF$ for the intersection of $\PCM(A)$ with the simple measures supported on $F$, which are those of the form $\sum_{x\in F} \alpha_x \delta_x$. Integration as above defines a nonnegative pairing between $\Conv(F)$ and $\PCM(F)$, and we will show that it is a dual pairing.
+
+An \emph{elementary test} on $F$ is a measure $\sum_{x\in F} \alpha_x \delta_x - \delta_y$ consisting of $y\in F$ and $\alpha\in \R_+^F$ of minimal support such that $y = \sum_{x\in F} \alpha_x x$.\footnote{The elementary tests are closely related to the oriented matroid formed by $F$.} The minimality assumption on $\supp(\alpha)$ guarantees that there are only finitely many elementary tests, since the support uniquely determines the values of the coefficients $\alpha$. The set of all $\beta\in \R_+^F$ such that $y = \sum_{x\in F} \beta_x x$ forms a convex polytope whose vertices are precisely the above $\alpha$'s of minimal support.
+
+Clearly every elementary test is on 
+
+\begin{lemma}
+$\PCM(F)$ and $\Conv(F)$ are polyhedral cones which are duals of each other.
+\label{Fdual}
+\end{lemma}
+
+\begin{proof}
+
+We claim that $\PCM(F)$ is the conical hull of the elementary tests. First, clearly every elementary test is in $\PCM(F)$. For the converse, suppose that $m = \sum_{x\in F} \gamma_x \delta_x \in \PCM(F)$, so that there is $\mu\in M_+ PA$ with $m = \partial \mu$.
+\end{proof}
 
 And now the main result:
 
@@ -297,9 +303,11 @@ And now the main result:
 \begin{proof}
 Corollary \ref{converse} is the ``only if'' direction of both statements. The ``if'' part of~\ref{b} is by the definition of convexity, since every measure of the form
 \[
-	\frac{\delta_x + \delta_y}{2} + \delta_{\frac{x+y}{2}}
+	\frac{\delta_x + \delta_y}{2} - \delta_{\frac{x+y}{2}}
 \]
-is in $\PCM(A)$. Hence $\Conv(A)$ is the dual cone of $\PCM(A)$. Since a closed convex cone is its own double dual~\cite[Theorem~3.44]{conesduality}, the ``if'' part of~\ref{a} now follows from Lemma~\ref{PCMclosed}.
+is in $\PCM(A)$. Hence $\Conv(A)$ is the dual cone of $\PCM(A)$.
+
+The most difficult part of the proof is to show that if $m\in MA$ is coconvex, then $m\in\PCM(A)$. We start by proving this in the case where $m$ is simple, $m = \sum_{i=1}^n \alpha_i \delta_{x_i}$, for distinct $x_i\in A$ and $\alpha_i\in\Q$; by rescaling, we can assume $\alpha_i\in\Z$ without loss of generality, which will come in handy later on. Writing $F = \{x_1,\ldots,x_n\}$, let us say that a map $F\to\R$ is \emph{convex} if it is the restriction of some $f\in\Conv(A)$ to $F$. 
 \end{proof}
 
 
